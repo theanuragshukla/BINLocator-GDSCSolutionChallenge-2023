@@ -117,6 +117,10 @@ app.get('/new-user',(req,res)=>{
 	res.sendFile(__dirname+'/signup.html')
 })
 
+app.get('/map', (req, res)=> {
+	res.sendFile(__dirname+'/map.html')
+})
+
 app.use(resolveToken)
 
 app.get('/addbin', (req, res)=>{
