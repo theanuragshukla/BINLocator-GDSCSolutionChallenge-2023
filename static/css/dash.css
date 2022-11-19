@@ -16,7 +16,7 @@
     width: 600px;
     max-width: 600px;
     background-color: #fff;
-    background-image: url(bg.svg);
+    background-image: url(/static/img/bg.svg);
 }
 .logo1{
     font-size: 40px;
