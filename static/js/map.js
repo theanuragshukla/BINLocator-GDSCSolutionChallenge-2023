@@ -1,5 +1,5 @@
-var map = L.map('map').setView([51.505, -0.09], 13);
-
+var map = L.map('map').setView([51.505, -0.09], 18);
+let locStatus=false
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '© OpenStreetMap'
@@ -9,6 +9,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 var popup = L.popup();
 function onLocationFound(e) {
     var radius = e.accuracy;
+	locStatus=true
     L.circle(e.latlng, radius).addTo(map);
 			map.flyTo(e.latlng, map.getZoom())
 
@@ -35,7 +36,13 @@ function getLongAndLat() {
 	);
 }
 const getBins = () => {
-
+	fetch('/get-all-bins')
+	.then(res=> res.json())
+	.then(res=> {
+		res.map(point=>{
+			L.marker([point.loc.x, point.loc.y]).on('click', ()=>{markerOnClick(point.uid)}).addTo(map);
+		})
+	})
 }
 const locateMe =async () => {
 	document.getElementById('map').click()

@@ -121,6 +121,14 @@ app.get('/map', (req, res)=> {
 	res.sendFile(__dirname+'/map.html')
 })
 
+
+app.get('/get-all-bins', async(req, res)=> {
+	const query = `SELECT uid, loc FROM bins`;
+	const bins = await db.query(query, []);
+	res.status(200).json(bins.rows)
+
+})
+
 app.use(resolveToken)
 
 app.get('/addbin', (req, res)=>{
