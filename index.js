@@ -173,9 +173,9 @@ app.post("/upload-new-bin",async (req,res)=>{
 	fs.writeFile(path, base64Data, 'base64', function(err) {
 
 });
-	const imgq = `insert into imgs(image, uid) VALUES($1, $2)`;
-	const imgv = [`bytea('${path}')`, uid]
-	const ret = await db.query(imgq, imgv)
+	//const imgq = `insert into imgs(image, uid) VALUES($1, $2)`;
+	//const imgv = [`bytea('${path}')`, uid]
+	//const ret = await db.query(imgq, imgv)
 	res.status(200).json({status:true})
 })
 
