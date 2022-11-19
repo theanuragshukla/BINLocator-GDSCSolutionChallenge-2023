@@ -35,7 +35,7 @@ const uploadBin=()=>{
 		},
 		body: JSON.stringify( {
 			loc:loc,
-			img:imgObj
+			img:JSON.stringify(imgObj)
 		})
 	})
 		.then(res=>res.json())

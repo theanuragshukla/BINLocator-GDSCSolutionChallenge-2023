@@ -5,6 +5,23 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	attribution: '© OpenStreetMap'
 }).addTo(map);
 
+const html = (obj) => {
+	console.log(obj)
+	const url = "https://www.google.com/maps?q="+obj.loc.x+','+obj.loc.y
+	return( `
+	<div class="info">
+				<div class="coords">X: <span id="xcoord">${obj.loc.x}</span></div>
+				<div class="coords">Y: <span id="ycoord">${obj.loc.y}</span></div>
+				<div class="img" id="img">
+					<img src="/getImage?uid=${obj.uid}.jpeg" id="imgHere" alt="">
+				</div>
+			<div class="btns">
+	<div id="dir" onclick="(()=>{document.getElementById('popup').classList.add('hidden')})()" class="dir">back</div>
+				<div id="dir" onclick="(()=>{location.href='${url}'})()" class="dir">Directions</div>
+		</div>	</div>
+	`)
+}
+
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 var popup = L.popup();
 function onLocationFound(e) {
@@ -26,8 +43,19 @@ map.on('click', onMapClick);
 map.on('locationfound', onLocationFound);
 L.marker([51.5, -0.09]).on('click', markerOnClick).addTo(map);
 
+const getBinInfo = async (uid) => {
+		await fetch('/get-bin-info?uid='+uid)
+	.then(res=> res.json())
+	.then(res=> {
+		setBinInfo(res)
+	})
+	
+
+}
+
 function markerOnClick(e){
-	console.log(e)
+	document.getElementById('popup').classList.remove('hidden')
+	getBinInfo(e)
 }
 
 function getLongAndLat() {
@@ -51,6 +79,11 @@ const locateMe =async () => {
 	}
 	getBins()
 }
+
+const setBinInfo = (obj) => {
+	document.getElementById("popup").innerHTML=html(obj);
+}
+
 window.onload=()=>{
 	locateMe()
 }

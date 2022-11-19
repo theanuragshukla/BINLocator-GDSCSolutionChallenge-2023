@@ -40,7 +40,7 @@ const resolveToken = async (req, res, next) => {
 		const authData = await verifyToken(token)
 		if (!authData.result){
 			if(req.method=="GET"){
-				res.redirect(`http://${req.header('host')}/`)
+				res.redirect(`http://${req.header('host')}/login`)
 			} else{
 				res.status(401).json({status:false,msg:"unauthorised access"})
 			}
@@ -110,12 +110,16 @@ app.post("/let-me-in",async (req,res)=>{
 
 /* Express server stuff*/
 
-app.get('/',(req,res)=>{
+app.get('/login',(req,res)=>{
 	res.sendFile(__dirname+'/login.html')
 })
 app.get('/new-user',(req,res)=>{
 	res.sendFile(__dirname+'/signup.html')
 })
+app.get('/', (req, res)=> {
+	res.sendFile(__dirname+'/map.html')
+})
+
 
 app.get('/map', (req, res)=> {
 	res.sendFile(__dirname+'/map.html')
@@ -127,6 +131,21 @@ app.get('/get-all-bins', async(req, res)=> {
 	const bins = await db.query(query, []);
 	res.status(200).json(bins.rows)
 
+})
+
+app.get('/get-bin-info', async (req, res)=> {
+	const query = `SELECT * FROM bins where uid = $1`;
+	const bins = await db.query(query, [req.query.uid]);
+	const ret = {
+		loc:bins.rows[0].loc,
+		uid:req.query.uid
+	}
+	res.status(200).json(ret)
+
+})
+
+app.get('/getImage', (req, res)=> {
+	res.sendFile(__dirname+'/binImages/'+req.query.uid)
 })
 
 app.use(resolveToken)
@@ -149,8 +168,10 @@ app.post("/upload-new-bin",async (req,res)=>{
 	const uid = generateUid()
 	const values = [`(${loc.latitude},${loc.longitude})`, uid, req.usrProf.uid];
 	const { rows } = await db.query(query, values)
-	console.log(rows[0])
-	fs.writeFileSync(`binImages/${uid}`, new Buffer(img, 'base64'));
+	var base64Data = JSON.parse(img).replace(/^data:image\/jpeg;base64,/, "");
+	fs.writeFile(__dirname+'/binImages/'+uid+'.jpeg', base64Data, 'base64', function(err) {
+
+});
 	res.status(200).json({status:true})
 })
 
@@ -256,4 +277,19 @@ const verifyToken = async (authToken)=>{
 				? ("0" + now.getSeconds())
 				: (now.getSeconds())))
 	}
+function dataURItoBlob(dataURI) {
+    var byteStr;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteStr = atob(dataURI.split(',')[1]);
+    else
+        byteStr = unescape(dataURI.split(',')[1]);
 
+    var mimeStr = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    var arr= new Uint8Array(byteStr.length);
+    for (var i = 0; i < byteStr.length; i++) {
+        arr[i] = byteStr.charCodeAt(i);
+    }
+
+    return new Blob([arr], {type:mimeStr});
+}

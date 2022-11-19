@@ -11,7 +11,7 @@ window.onload=async ()=>{
 	const manageAuth=(val)=>{
 		data=val
 		if(!val.result){
-			location.href='/'
+			location.href='/login'
 		}
 	}
 	await verify()
