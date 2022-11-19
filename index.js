@@ -169,9 +169,13 @@ app.post("/upload-new-bin",async (req,res)=>{
 	const values = [`(${loc.latitude},${loc.longitude})`, uid, req.usrProf.uid];
 	const { rows } = await db.query(query, values)
 	var base64Data = JSON.parse(img).replace(/^data:image\/jpeg;base64,/, "");
-	fs.writeFile(__dirname+'/binImages/'+uid+'.jpeg', base64Data, 'base64', function(err) {
+	const path = __dirname+'/binImages/'+uid+'.jpeg'
+	fs.writeFile(path, base64Data, 'base64', function(err) {
 
 });
+	const imgq = `insert into imgs(image, uid) VALUES($1, $2)`;
+	const imgv = [`bytea('${path}')`, uid]
+	const ret = await db.query(imgq, imgv)
 	res.status(200).json({status:true})
 })
 
