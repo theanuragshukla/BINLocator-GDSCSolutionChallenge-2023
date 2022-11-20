@@ -74,7 +74,7 @@ app.post("/add-new-user",async (req,res)=>{
 	await bcrypt.hash(req.body.pass, saltRounds).then(function(hash) {
 		passhash=hash
 	});
-	const values = [`${req.body.fname} ${req.body.lname}`,req.body.email,passhash,generateUid()];
+	const values = [`${req.body.fname} ${req.body.lname}`,req.body.email,passhash,generateUid()];
 	const { rows } = await db.query(query, values)
 	res.send({status:true})
 })

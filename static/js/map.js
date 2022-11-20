@@ -13,6 +13,7 @@ const html = (obj) => {
 				<div class="coords">X: <span id="xcoord">${obj.loc.x}</span></div>
 				<div class="coords">Y: <span id="ycoord">${obj.loc.y}</span></div>
 				<div class="img" id="img">
+				<h3>Dustbin image: </h3>
 					<img src="/getImage?uid=${obj.uid}.jpeg" id="imgHere" alt="">
 				</div>
 			<div class="btns">

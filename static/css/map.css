@@ -55,11 +55,16 @@ body{
 
 .img{
 	height: auto;
-	max-height: 300px;
+	max-height: 340px;
 	object-fit: cover;
 	padding: 0;
 	border-radius: 5px;
 	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+.img h3 {
+	height: 40px;
 }
 .img img{
 	width: 100%;
