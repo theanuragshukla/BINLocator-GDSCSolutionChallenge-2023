@@ -1,6 +1,6 @@
 # Video Demo Link
 
-[`Watch it on youtube`](https://youtu.be/YKo-rycfSM0)
+[`Watch it on GDrive`](https://drive.google.com/file/d/10ftzN4tTzSzs0CPcQ3jDpadd_PGj4CEw/view)
 
 
 # `NOTE`
