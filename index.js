@@ -74,9 +74,13 @@ app.post("/add-new-user",async (req,res)=>{
 	await bcrypt.hash(req.body.pass, saltRounds).then(function(hash) {
 		passhash=hash
 	});
-	const values = [`${req.body.fname} ${req.body.lname}`,req.body.email,passhash,generateUid()];
+	const uid = generateUid();
+	const values = [`${req.body.fname} ${req.body.lname}`,req.body.email,passhash,uid];
 	const { rows } = await db.query(query, values)
-	res.send({status:true})
+	const token = jwt.sign({data:uid}, secret, { expiresIn: '7d' })
+	const expiryDate = new Date(Number(new Date()) + (7*24*3600000));
+	res.setHeader("Set-Cookie", `token=${token};expires=${expiryDate}; Path=/;HttpOnly`)
+	res.status(200).json({"status":true, "token":token})
 })
 
 /* Login Endpoint */
