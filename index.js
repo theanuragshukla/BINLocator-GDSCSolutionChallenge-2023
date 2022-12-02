@@ -8,7 +8,6 @@ const express = require('express')
 const fs = require('fs')
 const app = express()
 const http = require('http').Server(app)
-const {checkSpaces} = require('some-random-form-validator')
 const bcrypt = require("bcryptjs")
 const saltRounds=10
 const jwt = require('jsonwebtoken')
