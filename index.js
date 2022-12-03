@@ -101,7 +101,7 @@ app.post("/let-me-in",async (req,res)=>{
 			var expiryDate = new Date(Number(new Date()) + (7*24*3600000));
 			res.setHeader("Set-Cookie", `token=${token};expires=${expiryDate}; Path=/;HttpOnly`)
 
-			res.send({status:true})
+			res.status(200).json({"status":true, "token":token})
 		}
 		else{
 			res.send({status:false,result:"wrong email or password"})
