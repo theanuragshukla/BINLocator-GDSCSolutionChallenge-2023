@@ -1,6 +1,6 @@
 # Video Demo Link
 
-[`Watch it on GDrive`](https://drive.google.com/file/d/10ftzN4tTzSzs0CPcQ3jDpadd_PGj4CEw/view)
+[`Watch it on YouTube`](https://youtu.be/jnQlGCDws3c)
 
 
 # `NOTE`
@@ -31,13 +31,13 @@ This is an app(web and android) which can help to locate dustbins in nearby area
 📄 Clone or fork this repo and change current directory to `undefined-DevHeat-2022`:
 
 ```sh
-git clone https://github.com/theanuragshukla/undefined-DevHeat-2022.git
+git clone https://github.com/theanuragshukla/BINLocator-GDSCSolutionChallenge-2023.git
 ```
 
 💿 Install all dependencies:
 
 ```sh
-cd undefined-DevHeat-2022
+cd BINLocator-GDSCSolutionChallenge-2023
 npm install
 ```
 
