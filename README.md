@@ -98,7 +98,7 @@ This app uses `PostgreSQL` for all its database needs. This App uses DB to:
 
 # Where is this App deployed
 
-Currently this dApp is deployed on Render as  [https://binlocator.herokuapp.com](https://binlocator.onrender.com).
+Currently this dApp is deployed on Render as  [https://binlocator.onrender.com](https://binlocator.onrender.com).
 
 # Future Aspirations for this App
 
